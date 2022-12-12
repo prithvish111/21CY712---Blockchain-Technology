@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Register User</title>
+    <link rel="stylesheet" href="css/styleregister.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.2.8/dist/web3.js"></script>
+    <script src="init.js"></script>
+    <div class="signup-box">
+      <h1>Register</h1>
+      <form>
+        <label>Name</label>
+        <input type="text" placeholder="" id="name"/>
+        <label>Email</label>
+        <input type="email" placeholder="" id="email"/>
+        <label>Wallet Address</label>
+        <input type="text" placeholder="" id="waddr"/>
+        <label>Register Number</label>
+        <input type="text" placeholder="" id="regno"/>
+        <input type="button" onclick="register()" value="Register"/>
+        <closeform></closeform>
+      </form>
+    </div>
+    <p class="para-2"> Already registered? <a href="login.html">Click here</a>
+    </p>
+    <script>
+      var account;
+      window.addEventListener('load', async () => {
+        if (typeof window.ethereum !== 'undefined') {
+          console.log("MetaMask is Available :) !");
+        }
+
+
+        if (window.ethereum) {
+          window.web3 = new Web3(ethereum);
+          //ethereum.autoRefreshOnNetworkChange = false;
+          const accounts = await ethereum.enable();
+          account = accounts[0];
+        }
+
+         else if (window.web3) {
+          //window.web3 = new Web3(web3.currentProvider);
+          window.web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/cbd9dc11b30147e9a2cc974be655ef7c"));
+        } else {
+          console.log('Non-Ethereum browser detected. Please install MetaMask');
+          alert('Non-Ethereum browser detected. Please install MetaMask');
+        }
+      });
+
+      function register() {
+        console.log("Registering applicant");
+        var myContract = new web3.eth.Contract(abi, contractaddress, {from: account, gasPrice: '4000000000',gas: '8000000'
+        });
+        console.log("Passing values: ",document.getElementById("name").value, document.getElementById("email").value, document.getElementById("waddr").value, document.getElementById("regno").value);
+
+        var result = myContract.methods.register(document.getElementById("name").value, document.getElementById("email").value, document.getElementById("waddr").value, document.getElementById("regno").value).send(function(err, result) {
+          console.log("Result: ", result);
+          if (err) {
+            console.log(err);
+          }
+        });
+        alert("Transacting through Metamask");
+      }
+    </script>
+  </body>
+</html>
