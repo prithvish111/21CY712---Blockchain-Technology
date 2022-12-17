@@ -5,7 +5,7 @@ body {
 
 html {
   overflow-y: hidden !important;
-  background-image: url('../media/hill_bg.gif') !important;
+  background-image: url('../media/m_bg.gif') !important;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
